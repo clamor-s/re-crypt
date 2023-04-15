@@ -144,3 +144,4 @@ dd conv=notrunc if=tmp_bootloader_enc.bin of=repart-block.bin seek=2097152 bs=1
 ########### Remove Tmp files ##################################################
 ###############################################################################
 rm tmp_*.bin
+chmod 664 ./repart-block.bin
