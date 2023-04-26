@@ -41,6 +41,7 @@ re-crypt script supports 3 keys:
 | ASUS/Google Nexus 7 (2012) | grouper | Requires SBK |
 | Pegatron Chagall | chagall | Requires SBK |
 | HTC One X | endeavoru | No need in `-k` |
+| Acer Iconia Tab A510 | a510 | Requires SBK |
 | Acer Iconia Tab A701 | a701 | Requires SBK |
 
 Example of command call for ASUS Transformer Prime TF201
