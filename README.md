@@ -43,6 +43,7 @@ re-crypt script supports 3 keys:
 | HTC One X | endeavoru | No need in `-k` |
 | Acer Iconia Tab A510 | a510 | Requires SBK |
 | Acer Iconia Tab A701 | a701 | Requires SBK |
+| Wexler Tab 7t | qc750 | No need in `-k` |
 
 Example of command call for ASUS Transformer Prime TF201
 

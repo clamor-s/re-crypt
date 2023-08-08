@@ -5,6 +5,7 @@ ENDEAVORU=588f67e66c763ff94a74b97924b3a499
 P880=c18269ee0900ce58482abe34bff1bc01
 P895=950821ad0964ce58fe98be34bff1ac02
 TF101v1=1682ccd88a1a43eaa532eeb6ecfe1d98 
+NOSBK=00000000000000000000000000000000
 
 while getopts ":d:k:b:h" option; do
     case "${option}" in
@@ -33,6 +34,9 @@ while getopts ":d:k:b:h" option; do
                 endeavoru)
                     key=$ENDEAVORU
                     ;;
+                qc750)
+                    key=$NOSBK
+                    ;;
             esac
             ;;
         h)
@@ -57,7 +61,7 @@ case "$BCT" in
 	BctSize=2
 	SBKEntry=4080
         ;;
-    tf201.bct | tf300t.bct | tf300tg.bct | tf600t.bct | tf700t.bct | p1801-t.bct | p880.bct | p895.bct | grouper.bct | chagall.bct | endeavoru.bct | a510.bct | a701.bct)
+    tf201.bct | tf300t.bct | tf300tg.bct | tf600t.bct | tf700t.bct | p1801-t.bct | p880.bct | p895.bct | grouper.bct | chagall.bct | endeavoru.bct | a510.bct | a701.bct | qc750.bct)
         HashEntry=3952
         LengthEntry=3936
 	BctSize=3
@@ -92,8 +96,12 @@ while [ $((bootloaderLength%16)) -ne 0 ]; do
 	bootloaderLength=$(stat --printf="%s" tmp_bootloader.bin)
 done
 
-# encrypt bootloader
-openssl aes-128-cbc -e -K $key -iv 00000000000000000000000000000000 -nopad -nosalt -in tmp_bootloader.bin -out tmp_bootloader_enc.bin #-nopad
+if [ "$key" != "$NOSBK" ]; then
+	# encrypt bootloader
+	openssl aes-128-cbc -e -K $key -iv 00000000000000000000000000000000 -nopad -nosalt -in tmp_bootloader.bin -out tmp_bootloader_enc.bin #-nopad
+else
+	mv tmp_bootloader.bin tmp_bootloader_enc.bin
+fi
 
 # calc bootloader hash of encrypted bootloader
 bootloaderHash=$(openssl dgst -mac cmac -macopt cipher:aes-128-cbc -macopt hexkey:$key tmp_bootloader_enc.bin | cut -d' ' -f2)
@@ -114,8 +122,12 @@ echo $bootloaderLength 	| xxd -r -p | dd conv=notrunc of=tmp_bct.bin seek=$Lengt
 # remove HASH from BCT
 dd if=tmp_bct.bin of=tmp_bct_trimmed.bin bs=1 skip=16
 
-# encrypt BCT
-openssl aes-128-cbc -e -K $key -iv 00000000000000000000000000000000 -nopad -nosalt -in tmp_bct_trimmed.bin -out tmp_bct_trimmed_enc.bin
+if [ "$key" != "$NOSBK" ]; then
+	# encrypt BCT
+	openssl aes-128-cbc -e -K $key -iv 00000000000000000000000000000000 -nopad -nosalt -in tmp_bct_trimmed.bin -out tmp_bct_trimmed_enc.bin
+else
+	mv tmp_bct_trimmed.bin tmp_bct_trimmed_enc.bin
+fi
 
 # hash encrypted BCT
 BCT_hash=$(openssl dgst -mac cmac -macopt cipher:aes-128-cbc -macopt hexkey:$key tmp_bct_trimmed_enc.bin | cut -d' ' -f2)
