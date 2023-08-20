@@ -61,7 +61,7 @@ case "$BCT" in
 	BctSize=2
 	SBKEntry=4080
         ;;
-    tf201.bct | tf300t.bct | tf300tg.bct | tf600t.bct | tf700t.bct | p1801-t.bct | p880.bct | p895.bct | grouper.bct | chagall.bct | endeavoru.bct | a510.bct | a701.bct | qc750.bct)
+    tf201.bct | tf300t.bct | tf300tg.bct | tf600t.bct | tf700t.bct | p1801-t.bct | p880.bct | p895.bct | grouper.bct | chagall.bct | endeavoru.bct | a510.bct | a701.bct | qc750.bct | surface-rt.bct)
         HashEntry=3952
         LengthEntry=3936
 	BctSize=3

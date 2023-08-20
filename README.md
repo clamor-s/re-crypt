@@ -44,6 +44,7 @@ re-crypt script supports 3 keys:
 | Acer Iconia Tab A510 | a510 | Requires SBK |
 | Acer Iconia Tab A701 | a701 | Requires SBK |
 | Wexler Tab 7t | qc750 | No need in `-k` |
+| Microsoft Surface RT | surface-rt | Requires SBK and SPI flash swap |
 
 Example of command call for ASUS Transformer Prime TF201
 
